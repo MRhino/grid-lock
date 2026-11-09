@@ -1,7 +1,7 @@
 {
   "name": "grid-lock",
   "private": true,
-  "version": "0.6.0",
+  "version": "0.7.0",
   "type": "module",
   "scripts": {
     "icons": "node scripts/make-icons.mjs",
@@ -20,6 +20,10 @@
   "dependencies": {
     "@fontsource/barlow-semi-condensed": "^5.3.0",
     "@fontsource/bowlby-one": "^5.3.0",
-    "@vercel/blob": "^2.8.2"
+    "@vercel/blob": "^2.9.0"
+  },
+  "overrides": {
+    "@vercel/cli-config": "0.3.8",
+    "zod": "^4.6.6"
   }
 }
