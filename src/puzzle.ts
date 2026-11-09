@@ -169,11 +169,11 @@ export function starsFor(moves: number, par: number, hinted: boolean): number {
 }
 
 export const TIERS = [
-  { name: 'Green Light', hue: 150 },
-  { name: 'Commuter', hue: 195 },
-  { name: 'Roadworks', hue: 45 },
-  { name: 'Standstill', hue: 320 },
-  { name: 'Total Gridlock', hue: 0 },
+  { name: 'Green Light', color: '#2f7d3a' },
+  { name: 'Commuter', color: '#1f5fa8' },
+  { name: 'Roadworks', color: '#a8560f' },
+  { name: 'Standstill', color: '#8a2f6b' },
+  { name: 'Total Gridlock', color: '#b3261e' },
 ];
 export const LEVELS_PER_TIER = 30;
 // Levels 1-150 are the original easy pack (now Warm-Up); the campaign is appended after them.

@@ -12,4 +12,4 @@
 - Cloud save: `api/save.ts` stores one private Vercel Blob per save ID (`saves/<ID>.json`, store `grid-lock-saves`, syd1; previews use `preview/saves/`). `mergeSaves` in `src/saveid.ts` merges level by level and must cover every new save field. The client syncs on launch and after each clear, never per move. Reset takes a new ID so old clears aren't merged back.
 - The service worker must never reload mid-level (`reloadPending` in main.ts).
 - Visual check: `npm run build && npx vite preview`, then screenshot with headless Chrome. `?shot=LEVEL&solve=N` opens a level and plays N solution moves without saving.
-- Visuals: obvious, saturated, glowing. Subtle cues get rejected.
+- Visuals: the printed-tin toy world in `DESIGN.md`. Obvious and saturated, never glowing. Subtle cues get rejected.

@@ -17,15 +17,15 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: ['icon-180.png'],
-      workbox: { navigateFallbackDenylist: [/^\/api\//] },
+      workbox: { navigateFallbackDenylist: [/^\/api\//], globPatterns: ['**/*.{js,css,html,woff2,png}'] },
       manifest: {
         name: 'Grid Lock',
         short_name: 'Grid Lock',
-        description: 'Slide the traffic aside and get the gold getaway car out of the jam.',
+        description: 'Slide the traffic aside and get the checker cab out of the jam.',
         display: 'fullscreen',
         orientation: 'portrait',
-        background_color: '#080a1f',
-        theme_color: '#080a1f',
+        background_color: '#0f6b70',
+        theme_color: '#0f6b70',
         icons: [
           { src: 'icon-192.png', sizes: '192x192', type: 'image/png' },
           { src: 'icon-512.png', sizes: '512x512', type: 'image/png', purpose: 'any maskable' },

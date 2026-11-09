@@ -2,7 +2,7 @@
 
 # Grid Lock
 
-A neon sliding-traffic puzzle PWA. Drag vehicles along their lanes and get the gold car out through the gate.
+A tin-toy sliding-traffic puzzle PWA. Drag vehicles along their lanes and get the checker cab out through the gate.
 
 A 150-level campaign across five tiers on densely packed boards, plus a 150-level Warm-Up pack, each level with a computed par, plus undo, hints, stars, resume mid-level, and cloud save with a private save ID.
 

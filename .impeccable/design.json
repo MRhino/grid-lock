@@ -1,0 +1,560 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-09T10:16:57Z",
+  "title": "Design System: Grid Lock",
+  "extensions": {
+    "colorMeta": {
+      "ground": {
+        "role": "neutral",
+        "displayName": "Sea Teal Ground",
+        "canonical": "#0f6b70",
+        "tonalRamp": [
+          "#000e10",
+          "#002b2e",
+          "#004c50",
+          "#156e73",
+          "#409095",
+          "#65b4b9",
+          "#8ad9de",
+          "#bffbff"
+        ]
+      },
+      "ground-2": {
+        "role": "neutral",
+        "displayName": "Deep Teal Print",
+        "canonical": "#0b5a5f",
+        "tonalRamp": [
+          "#000e10",
+          "#002b2e",
+          "#004c50",
+          "#266d72",
+          "#4b8f94",
+          "#6eb2b7",
+          "#92d7dc",
+          "#c1fbff"
+        ]
+      },
+      "tomato": {
+        "role": "primary",
+        "displayName": "Tomato Tin",
+        "canonical": "#d9382a",
+        "tonalRamp": [
+          "#1f0000",
+          "#4d0000",
+          "#810100",
+          "#b80602",
+          "#e14031",
+          "#ff7462",
+          "#ffb3a7",
+          "#ffe9e5"
+        ]
+      },
+      "tomato-d": {
+        "role": "primary",
+        "displayName": "Fired Tomato",
+        "canonical": "#a12218",
+        "tonalRamp": [
+          "#1f0000",
+          "#4d0000",
+          "#810100",
+          "#ab2d21",
+          "#d35344",
+          "#fb7766",
+          "#ffb3a7",
+          "#ffe9e5"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Toy Ink",
+        "canonical": "#16233a",
+        "tonalRamp": [
+          "#020a1f",
+          "#18253c",
+          "#34425b",
+          "#52627d",
+          "#73839f",
+          "#95a6c3",
+          "#b8cae9",
+          "#e6efff"
+        ]
+      },
+      "bed": {
+        "role": "neutral",
+        "displayName": "Road Bed",
+        "canonical": "#1d3557",
+        "tonalRamp": [
+          "#000a22",
+          "#0d2545",
+          "#2a4366",
+          "#486288",
+          "#6884ab",
+          "#8aa7d0",
+          "#aecbf6",
+          "#e5efff"
+        ]
+      },
+      "bed-line": {
+        "role": "neutral",
+        "displayName": "Lane Line",
+        "canonical": "#2b4a73",
+        "tonalRamp": [
+          "#000a21",
+          "#06244a",
+          "#24436b",
+          "#43638d",
+          "#6384b1",
+          "#85a7d6",
+          "#a8ccfc",
+          "#e4f0ff"
+        ]
+      },
+      "sun": {
+        "role": "secondary",
+        "displayName": "Cab Sun",
+        "canonical": "#f7bd12",
+        "tonalRamp": [
+          "#110a00",
+          "#312300",
+          "#543e00",
+          "#7b5c00",
+          "#a47b00",
+          "#ce9d00",
+          "#f9bf19",
+          "#ffedc6"
+        ]
+      },
+      "cab-shade": {
+        "role": "secondary",
+        "displayName": "Cab Shade",
+        "canonical": "#c98a00",
+        "tonalRamp": [
+          "#130900",
+          "#342100",
+          "#5a3b00",
+          "#825800",
+          "#ad7600",
+          "#d79722",
+          "#fdbc51",
+          "#ffebd0"
+        ]
+      },
+      "cab-light": {
+        "role": "secondary",
+        "displayName": "Cab Light",
+        "canonical": "#ffd95a",
+        "tonalRamp": [
+          "#100a00",
+          "#2e2400",
+          "#514000",
+          "#765f00",
+          "#9d7f00",
+          "#c6a100",
+          "#ebc643",
+          "#ffeeb9"
+        ]
+      },
+      "tin": {
+        "role": "neutral",
+        "displayName": "Tin Plate",
+        "canonical": "#f2f0e4",
+        "tonalRamp": [
+          "#0d0b05",
+          "#27251c",
+          "#444239",
+          "#636257",
+          "#848378",
+          "#a7a59a",
+          "#cbc9be",
+          "#f1efe3"
+        ]
+      },
+      "mist": {
+        "role": "neutral",
+        "displayName": "Faded Label",
+        "canonical": "#b9c8d8",
+        "tonalRamp": [
+          "#030c16",
+          "#1b2632",
+          "#374351",
+          "#566371",
+          "#768493",
+          "#98a7b6",
+          "#bccbdb",
+          "#e2f0ff"
+        ]
+      },
+      "tier-warm-up": {
+        "role": "tertiary",
+        "displayName": "Warm-Up Ink",
+        "canonical": "#4a5a63",
+        "tonalRamp": [
+          "#020d14",
+          "#19272f",
+          "#35444d",
+          "#54646d",
+          "#74858f",
+          "#96a8b2",
+          "#baccd7",
+          "#dff2fd"
+        ]
+      },
+      "tier-green-light": {
+        "role": "tertiary",
+        "displayName": "Green Light Ink",
+        "canonical": "#2f7d3a",
+        "tonalRamp": [
+          "#001001",
+          "#002f08",
+          "#005115",
+          "#247331",
+          "#499652",
+          "#6dba74",
+          "#91df97",
+          "#c9ffcc"
+        ]
+      },
+      "tier-commuter": {
+        "role": "tertiary",
+        "displayName": "Commuter Ink",
+        "canonical": "#1f5fa8",
+        "tonalRamp": [
+          "#000b20",
+          "#00244d",
+          "#004181",
+          "#2261aa",
+          "#4584d0",
+          "#68a8f7",
+          "#a4ccff",
+          "#e4f0ff"
+        ]
+      },
+      "tier-roadworks": {
+        "role": "tertiary",
+        "displayName": "Roadworks Ink",
+        "canonical": "#a8560f",
+        "tonalRamp": [
+          "#170600",
+          "#3d1a00",
+          "#683100",
+          "#954900",
+          "#bd692a",
+          "#e48c50",
+          "#ffb788",
+          "#ffeadd"
+        ]
+      },
+      "tier-standstill": {
+        "role": "tertiary",
+        "displayName": "Standstill Ink",
+        "canonical": "#8a2f6b",
+        "tonalRamp": [
+          "#1c0012",
+          "#460032",
+          "#711554",
+          "#953a75",
+          "#bb5c97",
+          "#e17fbb",
+          "#ffaadc",
+          "#ffe6f4"
+        ]
+      },
+      "tier-total-gridlock": {
+        "role": "tertiary",
+        "displayName": "Total Gridlock Ink",
+        "canonical": "#b3261e",
+        "tonalRamp": [
+          "#1f0000",
+          "#4d0001",
+          "#810002",
+          "#b0221b",
+          "#d84c3f",
+          "#ff7363",
+          "#ffb3a8",
+          "#ffe9e5"
+        ]
+      }
+    },
+    "vehiclePrints": {
+      "order": "body, shade, light",
+      "sets": {
+        "cab": [
+          "#f7bd12",
+          "#c98a00",
+          "#ffd95a"
+        ],
+        "tomato": [
+          "#d9382a",
+          "#a12218",
+          "#f0695b"
+        ],
+        "blue": [
+          "#2470c7",
+          "#17508f",
+          "#5a9be2"
+        ],
+        "tin": [
+          "#f2f0e4",
+          "#c3bfa8",
+          "#ffffff"
+        ],
+        "purple": [
+          "#7a3fa0",
+          "#562a73",
+          "#a06cc4"
+        ],
+        "green": [
+          "#3fa34d",
+          "#2a7636",
+          "#6fc47b"
+        ],
+        "orange": [
+          "#ef7d23",
+          "#b95810",
+          "#f7a35f"
+        ],
+        "pink": [
+          "#e0559a",
+          "#a93270",
+          "#f08abb"
+        ]
+      },
+      "details": {
+        "outline": "#16233a",
+        "glass": "#a9dbe6",
+        "lamp": "#fff6c9",
+        "tail": "#b3121d",
+        "tyre": "#b4bec8"
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "The stacked GRID / LOCK title only."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Screen headings."
+      },
+      "numeral": {
+        "displayName": "Numeral",
+        "purpose": "The current level number in the play header."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Plate buttons, counters, tier tags and level cells."
+      },
+      "lead": {
+        "displayName": "Lead",
+        "purpose": "Start-screen line and result text."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Instructions."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Captions, status and control labels."
+      }
+    },
+    "shadows": [
+      {
+        "name": "lift",
+        "value": "0 2px 0 #0003, 0 5px 9px #0b1a2a66",
+        "purpose": "Every raised plate."
+      },
+      {
+        "name": "tray",
+        "value": "0 0 0 3px #16233a, 0 0 0 7px #f2f0e4, 0 0 0 19px #d9382a, 0 0 0 21px #a12218, 0 16px 22px 14px #06303366",
+        "purpose": "The board tray rings and its cast shadow."
+      },
+      {
+        "name": "vehicle-rest",
+        "value": "drop-shadow(0 3px 2px #06122480)",
+        "purpose": "Vehicles at rest."
+      },
+      {
+        "name": "vehicle-grab",
+        "value": "drop-shadow(0 8px 5px #06122499)",
+        "purpose": "A vehicle under the finger."
+      }
+    ],
+    "motion": [
+      {
+        "name": "slide-settle",
+        "value": ".16s cubic-bezier(.2, .9, .3, 1)",
+        "purpose": "A vehicle settling into its cell."
+      },
+      {
+        "name": "lift",
+        "value": ".12s ease-out",
+        "purpose": "Scale change on grab and release."
+      },
+      {
+        "name": "clack",
+        "value": ".2s ease-out",
+        "purpose": "Release squash to .95 and rebound."
+      },
+      {
+        "name": "cab-exit",
+        "value": ".42s cubic-bezier(.35, .55, .75, 1)",
+        "purpose": "The cab leaving through the gate."
+      },
+      {
+        "name": "stamp",
+        "value": ".34s cubic-bezier(.16, 1, .3, 1), .13s stagger",
+        "purpose": "Earned stars stamping in."
+      },
+      {
+        "name": "away",
+        "value": "1.1s cubic-bezier(.16, 1, .3, 1)",
+        "purpose": "The cab driving off on the result sheet."
+      },
+      {
+        "name": "hint-bob",
+        "value": ".55s ease-in-out infinite alternate",
+        "purpose": "The suggested vehicle."
+      },
+      {
+        "name": "gate-nudge",
+        "value": ".5s ease-in-out, 3 times",
+        "purpose": "Draws the eye to the exit."
+      },
+      {
+        "name": "parade",
+        "value": "14s linear infinite",
+        "purpose": "Vehicles on the start-screen road."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "narrow",
+        "value": "360px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Play Plate",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The main action plate on the start screen.",
+      "html": "<button class=\"ds-big\">PLAY</button>",
+      "css": ":host{--ground:#0f6b70;--ground-2:#0b5a5f;--tomato:#d9382a;--tomato-d:#a12218;--ink:#16233a;--bed:#1d3557;--bed-line:#2b4a73;--sun:#f7bd12;--tin:#f2f0e4;--lift:0 2px 0 #0003,0 5px 9px #0b1a2a66;--display:'Bowlby One',Impact,sans-serif;--label:'Barlow Semi Condensed',system-ui,sans-serif} .ds-big{width:min(290px,82vw);height:62px;border:0;border-radius:12px;font:400 25px/1 var(--display);color:var(--tin);background:var(--tomato);box-shadow:inset 0 0 0 3px var(--tin),inset 0 0 0 5px var(--tomato-d),var(--lift)} .ds-big:active{transform:translateY(2px)} .ds-big:focus-visible{outline:3px solid var(--sun);outline-offset:2px}"
+    },
+    {
+      "name": "Sun Plate",
+      "kind": "button",
+      "refersTo": "button-primary-alt",
+      "description": "The alternate plate for LEVELS and NEXT.",
+      "html": "<button class=\"ds-big-alt\">LEVELS</button>",
+      "css": ":host{--ground:#0f6b70;--ground-2:#0b5a5f;--tomato:#d9382a;--tomato-d:#a12218;--ink:#16233a;--bed:#1d3557;--bed-line:#2b4a73;--sun:#f7bd12;--tin:#f2f0e4;--lift:0 2px 0 #0003,0 5px 9px #0b1a2a66;--display:'Bowlby One',Impact,sans-serif;--label:'Barlow Semi Condensed',system-ui,sans-serif} .ds-big-alt{width:min(290px,82vw);height:62px;border:0;border-radius:12px;font:400 25px/1 var(--display);color:var(--ink);background:var(--sun);box-shadow:inset 0 0 0 3px var(--ink),var(--lift)} .ds-big-alt:active{transform:translateY(2px)} .ds-big-alt:focus-visible{outline:3px solid var(--sun);outline-offset:2px}"
+    },
+    {
+      "name": "Tool Plate",
+      "kind": "button",
+      "refersTo": "button-tool",
+      "description": "Undo, Restart and Hint under the board.",
+      "html": "<button class=\"ds-tool\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M8 5 3.5 9.5 8 14M4 9.5h10a6 6 0 0 1 0 12h-4\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>Undo</button>",
+      "css": ":host{--ground:#0f6b70;--ground-2:#0b5a5f;--tomato:#d9382a;--tomato-d:#a12218;--ink:#16233a;--bed:#1d3557;--bed-line:#2b4a73;--sun:#f7bd12;--tin:#f2f0e4;--lift:0 2px 0 #0003,0 5px 9px #0b1a2a66;--display:'Bowlby One',Impact,sans-serif;--label:'Barlow Semi Condensed',system-ui,sans-serif} .ds-tool{width:120px;height:66px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border:0;border-radius:10px;background:var(--tin);color:var(--ink);font:700 16px var(--label);box-shadow:var(--lift)} .ds-tool svg{color:var(--tomato-d)} .ds-tool:disabled{background:var(--ground-2);color:#cfe0dc;box-shadow:none} .ds-tool:disabled svg{color:inherit} .ds-tool:active{transform:translateY(2px)} .ds-tool:focus-visible{outline:3px solid var(--sun);outline-offset:2px}"
+    },
+    {
+      "name": "Chip",
+      "kind": "chip",
+      "refersTo": "chip",
+      "description": "Small tin button for secondary actions.",
+      "html": "<button class=\"ds-chip\">Replay</button>",
+      "css": ":host{--ground:#0f6b70;--ground-2:#0b5a5f;--tomato:#d9382a;--tomato-d:#a12218;--ink:#16233a;--bed:#1d3557;--bed-line:#2b4a73;--sun:#f7bd12;--tin:#f2f0e4;--lift:0 2px 0 #0003,0 5px 9px #0b1a2a66;--display:'Bowlby One',Impact,sans-serif;--label:'Barlow Semi Condensed',system-ui,sans-serif} .ds-chip{padding:8px 15px;min-height:44px;border:0;border-radius:8px;background:var(--tin);color:var(--ink);font:700 16px var(--label);box-shadow:var(--lift)} .ds-chip:focus-visible{outline:3px solid var(--sun);outline-offset:2px}"
+    },
+    {
+      "name": "Back Button",
+      "kind": "button",
+      "refersTo": "round-icon-button",
+      "description": "Circular sun button in the play header.",
+      "html": "<button class=\"ds-round\" aria-label=\"Levels\"><svg width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M15 4 7 12l8 8\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></button>",
+      "css": ":host{--ground:#0f6b70;--ground-2:#0b5a5f;--tomato:#d9382a;--tomato-d:#a12218;--ink:#16233a;--bed:#1d3557;--bed-line:#2b4a73;--sun:#f7bd12;--tin:#f2f0e4;--lift:0 2px 0 #0003,0 5px 9px #0b1a2a66;--display:'Bowlby One',Impact,sans-serif;--label:'Barlow Semi Condensed',system-ui,sans-serif} .ds-round{width:46px;height:46px;display:grid;place-items:center;border:0;border-radius:50%;background:var(--sun);color:var(--ink);box-shadow:var(--lift)} .ds-round:active{transform:translateY(2px)} .ds-round:focus-visible{outline:3px solid var(--sun);outline-offset:2px}"
+    },
+    {
+      "name": "Counter",
+      "kind": "card",
+      "refersTo": "counter",
+      "description": "Moves and par readouts in the play header.",
+      "html": "<div class=\"ds-count\"><small>PAR</small><span>28</span></div>",
+      "css": ":host{--ground:#0f6b70;--ground-2:#0b5a5f;--tomato:#d9382a;--tomato-d:#a12218;--ink:#16233a;--bed:#1d3557;--bed-line:#2b4a73;--sun:#f7bd12;--tin:#f2f0e4;--lift:0 2px 0 #0003,0 5px 9px #0b1a2a66;--display:'Bowlby One',Impact,sans-serif;--label:'Barlow Semi Condensed',system-ui,sans-serif} .ds-count{display:inline-block;min-width:62px;padding:5px 8px 6px;text-align:center;border-radius:8px;background:var(--ink);color:var(--tin);font-family:var(--label);box-shadow:var(--lift)} .ds-count small{display:block;font-size:13px;font-weight:700;color:#b9c8d8} .ds-count span{font:400 24px/1 var(--display);color:var(--sun)}"
+    },
+    {
+      "name": "Level Cell",
+      "kind": "custom",
+      "refersTo": "level-cell",
+      "description": "Tier-coloured square in the level list.",
+      "html": "<button class=\"ds-cell\">12</button>",
+      "css": ":host{--ground:#0f6b70;--ground-2:#0b5a5f;--tomato:#d9382a;--tomato-d:#a12218;--ink:#16233a;--bed:#1d3557;--bed-line:#2b4a73;--sun:#f7bd12;--tin:#f2f0e4;--lift:0 2px 0 #0003,0 5px 9px #0b1a2a66;--display:'Bowlby One',Impact,sans-serif;--label:'Barlow Semi Condensed',system-ui,sans-serif} .ds-cell{width:64px;aspect-ratio:1;border:0;border-radius:8px;color:var(--tin);font:400 20px/1 var(--display);background:#2f7d3a;box-shadow:inset 0 0 0 2px #fff6,var(--lift)} .ds-cell:active{transform:translateY(2px)} .ds-cell:focus-visible{outline:3px solid var(--sun);outline-offset:2px}"
+    },
+    {
+      "name": "Checker Cab",
+      "kind": "custom",
+      "description": "The hero vehicle print, drawn in SVG.",
+      "html": "<svg class=\"ds-vehicle\" viewBox=\"0 0 200 100\" aria-hidden=\"true\"><rect x=\"40\" y=\"3\" width=\"34\" height=\"12\" rx=\"3\" fill=\"#16233a\"/><rect x=\"43\" y=\"5\" width=\"28\" height=\"8\" rx=\"2\" fill=\"#b4bec8\"/><rect x=\"40\" y=\"85\" width=\"34\" height=\"12\" rx=\"3\" fill=\"#16233a\"/><rect x=\"43\" y=\"87\" width=\"28\" height=\"8\" rx=\"2\" fill=\"#b4bec8\"/><rect x=\"130\" y=\"3\" width=\"34\" height=\"12\" rx=\"3\" fill=\"#16233a\"/><rect x=\"133\" y=\"5\" width=\"28\" height=\"8\" rx=\"2\" fill=\"#b4bec8\"/><rect x=\"130\" y=\"85\" width=\"34\" height=\"12\" rx=\"3\" fill=\"#16233a\"/><rect x=\"133\" y=\"87\" width=\"28\" height=\"8\" rx=\"2\" fill=\"#b4bec8\"/><rect x=\"7\" y=\"13\" width=\"186\" height=\"74\" rx=\"24\" fill=\"#16233a\"/><rect x=\"10\" y=\"16\" width=\"180\" height=\"68\" rx=\"21\" fill=\"#f7bd12\"/><rect x=\"10\" y=\"66\" width=\"180\" height=\"18\" rx=\"9\" fill=\"#c98a00\"/><rect x=\"96\" y=\"14\" width=\"6\" height=\"5\" rx=\"0\" fill=\"#c98a00\"/><rect x=\"96\" y=\"81\" width=\"6\" height=\"5\" rx=\"0\" fill=\"#c98a00\"/><path d=\"M118 27 L142 33 Q148 50 142 67 L118 73 Z\" fill=\"#a9dbe6\" stroke=\"#16233a\" stroke-width=\"3\" stroke-linejoin=\"round\"/><path d=\"M62 30 L44 35 Q40 50 44 65 L62 70 Z\" fill=\"#a9dbe6\" stroke=\"#16233a\" stroke-width=\"3\" stroke-linejoin=\"round\"/><rect x=\"64\" y=\"28\" width=\"52\" height=\"44\" rx=\"7\" fill=\"#ffd95a\"/><rect x=\"25\" y=\"16\" width=\"9\" height=\"5\" rx=\"0\" fill=\"#16233a\"/><rect x=\"25\" y=\"21\" width=\"9\" height=\"5\" rx=\"0\" fill=\"#fff\"/><rect x=\"34\" y=\"16\" width=\"9\" height=\"5\" rx=\"0\" fill=\"#fff\"/><rect x=\"34\" y=\"21\" width=\"9\" height=\"5\" rx=\"0\" fill=\"#16233a\"/><rect x=\"43\" y=\"16\" width=\"9\" height=\"5\" rx=\"0\" fill=\"#16233a\"/><rect x=\"43\" y=\"21\" width=\"9\" height=\"5\" rx=\"0\" fill=\"#fff\"/><rect x=\"52\" y=\"16\" width=\"9\" height=\"5\" rx=\"0\" fill=\"#fff\"/><rect x=\"52\" y=\"21\" width=\"9\" height=\"5\" rx=\"0\" fill=\"#16233a\"/><rect x=\"61\" y=\"16\" width=\"9\" height=\"5\" rx=\"0\" fill=\"#16233a\"/><rect x=\"61\" y=\"21\" width=\"9\" height=\"5\" rx=\"0\" fill=\"#fff\"/><rect x=\"70\" y=\"16\" width=\"9\" height=\"5\" rx=\"0\" fill=\"#fff\"/><rect x=\"70\" y=\"21\" width=\"9\" height=\"5\" rx=\"0\" fill=\"#16233a\"/><rect x=\"79\" y=\"16\" width=\"9\" height=\"5\" rx=\"0\" fill=\"#16233a\"/><rect x=\"79\" y=\"21\" width=\"9\" height=\"5\" rx=\"0\" fill=\"#fff\"/><rect x=\"88\" y=\"16\" width=\"9\" height=\"5\" rx=\"0\" fill=\"#fff\"/><rect x=\"88\" y=\"21\" width=\"9\" height=\"5\" rx=\"0\" fill=\"#16233a\"/><rect x=\"97\" y=\"16\" width=\"9\" height=\"5\" rx=\"0\" fill=\"#16233a\"/><rect x=\"97\" y=\"21\" width=\"9\" height=\"5\" rx=\"0\" fill=\"#fff\"/><rect x=\"106\" y=\"16\" width=\"9\" height=\"5\" rx=\"0\" fill=\"#fff\"/><rect x=\"106\" y=\"21\" width=\"9\" height=\"5\" rx=\"0\" fill=\"#16233a\"/><rect x=\"115\" y=\"16\" width=\"9\" height=\"5\" rx=\"0\" fill=\"#16233a\"/><rect x=\"115\" y=\"21\" width=\"9\" height=\"5\" rx=\"0\" fill=\"#fff\"/><rect x=\"124\" y=\"16\" width=\"9\" height=\"5\" rx=\"0\" fill=\"#fff\"/><rect x=\"124\" y=\"21\" width=\"9\" height=\"5\" rx=\"0\" fill=\"#16233a\"/><rect x=\"133\" y=\"16\" width=\"9\" height=\"5\" rx=\"0\" fill=\"#16233a\"/><rect x=\"133\" y=\"21\" width=\"9\" height=\"5\" rx=\"0\" fill=\"#fff\"/><rect x=\"142\" y=\"16\" width=\"9\" height=\"5\" rx=\"0\" fill=\"#fff\"/><rect x=\"142\" y=\"21\" width=\"9\" height=\"5\" rx=\"0\" fill=\"#16233a\"/><rect x=\"151\" y=\"16\" width=\"9\" height=\"5\" rx=\"0\" fill=\"#16233a\"/><rect x=\"151\" y=\"21\" width=\"9\" height=\"5\" rx=\"0\" fill=\"#fff\"/><rect x=\"160\" y=\"16\" width=\"9\" height=\"5\" rx=\"0\" fill=\"#fff\"/><rect x=\"160\" y=\"21\" width=\"9\" height=\"5\" rx=\"0\" fill=\"#16233a\"/><rect x=\"169\" y=\"16\" width=\"9\" height=\"5\" rx=\"0\" fill=\"#16233a\"/><rect x=\"169\" y=\"21\" width=\"9\" height=\"5\" rx=\"0\" fill=\"#fff\"/><rect x=\"25\" y=\"74\" width=\"9\" height=\"5\" rx=\"0\" fill=\"#16233a\"/><rect x=\"25\" y=\"79\" width=\"9\" height=\"5\" rx=\"0\" fill=\"#fff\"/><rect x=\"34\" y=\"74\" width=\"9\" height=\"5\" rx=\"0\" fill=\"#fff\"/><rect x=\"34\" y=\"79\" width=\"9\" height=\"5\" rx=\"0\" fill=\"#16233a\"/><rect x=\"43\" y=\"74\" width=\"9\" height=\"5\" rx=\"0\" fill=\"#16233a\"/><rect x=\"43\" y=\"79\" width=\"9\" height=\"5\" rx=\"0\" fill=\"#fff\"/><rect x=\"52\" y=\"74\" width=\"9\" height=\"5\" rx=\"0\" fill=\"#fff\"/><rect x=\"52\" y=\"79\" width=\"9\" height=\"5\" rx=\"0\" fill=\"#16233a\"/><rect x=\"61\" y=\"74\" width=\"9\" height=\"5\" rx=\"0\" fill=\"#16233a\"/><rect x=\"61\" y=\"79\" width=\"9\" height=\"5\" rx=\"0\" fill=\"#fff\"/><rect x=\"70\" y=\"74\" width=\"9\" height=\"5\" rx=\"0\" fill=\"#fff\"/><rect x=\"70\" y=\"79\" width=\"9\" height=\"5\" rx=\"0\" fill=\"#16233a\"/><rect x=\"79\" y=\"74\" width=\"9\" height=\"5\" rx=\"0\" fill=\"#16233a\"/><rect x=\"79\" y=\"79\" width=\"9\" height=\"5\" rx=\"0\" fill=\"#fff\"/><rect x=\"88\" y=\"74\" width=\"9\" height=\"5\" rx=\"0\" fill=\"#fff\"/><rect x=\"88\" y=\"79\" width=\"9\" height=\"5\" rx=\"0\" fill=\"#16233a\"/><rect x=\"97\" y=\"74\" width=\"9\" height=\"5\" rx=\"0\" fill=\"#16233a\"/><rect x=\"97\" y=\"79\" width=\"9\" height=\"5\" rx=\"0\" fill=\"#fff\"/><rect x=\"106\" y=\"74\" width=\"9\" height=\"5\" rx=\"0\" fill=\"#fff\"/><rect x=\"106\" y=\"79\" width=\"9\" height=\"5\" rx=\"0\" fill=\"#16233a\"/><rect x=\"115\" y=\"74\" width=\"9\" height=\"5\" rx=\"0\" fill=\"#16233a\"/><rect x=\"115\" y=\"79\" width=\"9\" height=\"5\" rx=\"0\" fill=\"#fff\"/><rect x=\"124\" y=\"74\" width=\"9\" height=\"5\" rx=\"0\" fill=\"#fff\"/><rect x=\"124\" y=\"79\" width=\"9\" height=\"5\" rx=\"0\" fill=\"#16233a\"/><rect x=\"133\" y=\"74\" width=\"9\" height=\"5\" rx=\"0\" fill=\"#16233a\"/><rect x=\"133\" y=\"79\" width=\"9\" height=\"5\" rx=\"0\" fill=\"#fff\"/><rect x=\"142\" y=\"74\" width=\"9\" height=\"5\" rx=\"0\" fill=\"#fff\"/><rect x=\"142\" y=\"79\" width=\"9\" height=\"5\" rx=\"0\" fill=\"#16233a\"/><rect x=\"151\" y=\"74\" width=\"9\" height=\"5\" rx=\"0\" fill=\"#16233a\"/><rect x=\"151\" y=\"79\" width=\"9\" height=\"5\" rx=\"0\" fill=\"#fff\"/><rect x=\"160\" y=\"74\" width=\"9\" height=\"5\" rx=\"0\" fill=\"#fff\"/><rect x=\"160\" y=\"79\" width=\"9\" height=\"5\" rx=\"0\" fill=\"#16233a\"/><rect x=\"169\" y=\"74\" width=\"9\" height=\"5\" rx=\"0\" fill=\"#16233a\"/><rect x=\"169\" y=\"79\" width=\"9\" height=\"5\" rx=\"0\" fill=\"#fff\"/><rect x=\"78\" y=\"41\" width=\"24\" height=\"18\" rx=\"4\" fill=\"#16233a\"/><rect x=\"81\" y=\"44\" width=\"18\" height=\"12\" rx=\"2\" fill=\"#fff6c9\"/><circle cx=\"180\" cy=\"29\" r=\"7\" fill=\"#fff6c9\" stroke=\"#16233a\" stroke-width=\"2\"/><circle cx=\"180\" cy=\"71\" r=\"7\" fill=\"#fff6c9\" stroke=\"#16233a\" stroke-width=\"2\"/><rect x=\"9\" y=\"22\" width=\"7\" height=\"14\" rx=\"2\" fill=\"#b3121d\"/><rect x=\"9\" y=\"64\" width=\"7\" height=\"14\" rx=\"2\" fill=\"#b3121d\"/></svg>",
+      "css": ".ds-vehicle{display:block;width:180px;height:90px;filter:drop-shadow(0 3px 2px #06122480)}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Printed-Tin Toy City",
+    "overview": "Grid Lock is a wind-up toy you pick up, not an app you open. Everything is a piece of lithographed tinplate: a sea-teal ground printed with a repeating car and star motif, a tomato tray with an inked rim, an ink-blue road bed, and flat hard-edged vehicles with printed windows, wheels and seam tabs. The black-and-white checker cab is the hero, and it is the only yellow vehicle on the road.\n\nColour is saturated and opaque, the way printing ink on metal is. Depth comes from stamped plate edges and the small shadow a metal part throws, never from light. The world refuses the neon-on-dark puzzle app and the flat-tile puzzle app, and it keeps the look of the commercial puzzle that inspired the game out entirely.\n\nThe system is dense and thumb-sized on a portrait phone. Motion is mechanical: vehicles lift when grabbed, clack when they land, and earned stars stamp in on a clear.",
+    "keyCharacteristics": [
+      "Opaque litho colour on a printed teal ground, with no glow and no translucent glass.",
+      "One poster face (Bowlby One) for words and numbers that act as signage, and one condensed label face for everything else.",
+      "Raised parts are tin plates with a stamped edge.",
+      "The road bed, its dashed exit lane and the sun gate are always printed, so the way out is always visible.",
+      "Vehicles are drawn in code as flat three-tone prints, each with an ink outline."
+    ],
+    "rules": [
+      {
+        "name": "The One Yellow Car Rule",
+        "body": "Traffic never uses yellow. Sun on the road belongs to the cab alone, so the piece you are looking for is found at a glance.",
+        "section": "colors"
+      },
+      {
+        "name": "The Large Sun Rule",
+        "body": "Sun on Sea Teal Ground and Tin Plate on Tomato Tin clear only large-text contrast (3.65:1 and 4.04:1). Use them at 20px bold or larger. Sun on Toy Ink reads at any size.",
+        "section": "colors"
+      },
+      {
+        "name": "The Printed Ink Rule",
+        "body": "Surface fills are opaque ink. The dashed lane on the board is the one printed element held back with opacity, so vehicles stay in front of it.",
+        "section": "colors"
+      },
+      {
+        "name": "The Two Voices Rule",
+        "body": "Bowlby One carries signage and numbers at weight 400, its only weight. Barlow Semi Condensed carries everything else at 600 or 700, the only weights loaded.",
+        "section": "typography"
+      },
+      {
+        "name": "The Plate Rule",
+        "body": "Every raised plate carries the Lift shadow. Plate buttons, tools, level cells and the back button go down 2px when pressed.",
+        "section": "elevation"
+      },
+      {
+        "name": "The No Glow Rule",
+        "body": "Shadows are dark and fall downward. No coloured halos, no neon, no bloom, on any state including hints and stars.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do print new surfaces on the Sea Teal Ground with its car and star motif.",
+      "Do keep the board, dashed exit lane and sun gate visible at all times.",
+      "Do give every raised plate the Lift shadow, and give plate buttons, tools, level cells and the back button a 2px press.",
+      "Do build new vehicles as flat body, shade and light triples with a Toy Ink outline and light tyres, because dark tyres vanish on the Road Bed.",
+      "Do draw icons as inline SVG with heavy rounded strokes.",
+      "Do keep hint and focus cues obvious, using Cab Sun lines at 3-4px, solid or dashed."
+    ],
+    "donts": [
+      "Don't give any traffic vehicle a yellow body.",
+      "Don't use glow, neon, bloom or coloured halos.",
+      "Don't use soft colour gradients; gradients here only draw hard-edged rules, dashes and gate stops.",
+      "Don't set small text in Sun on Sea Teal Ground or Tin Plate on Tomato Tin.",
+      "Don't split a truck's outline between cargo and cab; a gap reads as two vehicles.",
+      "Don't echo the name, card layouts or look of the commercial puzzle that inspired the game."
+    ]
+  }
+}

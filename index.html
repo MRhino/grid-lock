@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
-    <meta name="theme-color" content="#080a1f" />
+    <meta name="theme-color" content="#0f6b70" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -13,32 +13,42 @@
     <title>Grid Lock</title>
   </head>
   <body>
-    <div id="sky"><i></i><i></i><i></i></div>
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+      <symbol id="i-back" viewBox="0 0 24 24"><path d="M15 4 7 12l8 8" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-undo" viewBox="0 0 24 24"><path d="M8 5 3.5 9.5 8 14M4 9.5h10a6 6 0 0 1 0 12h-4" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-again" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.6-5.9M20 2.5V7h-4.5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-hint" viewBox="0 0 24 24"><path d="M9 21h6M9.5 17.5h5M12 2.5a6.8 6.8 0 0 0-4 12.3c.8.6 1.3 1.4 1.4 2.7h5.2c.1-1.3.6-2.1 1.4-2.7a6.8 6.8 0 0 0-4-12.3Z" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 1.8 3.1 6.6 7.2.9-5.3 5 1.4 7.1-6.4-3.5-6.4 3.5L7 14.3l-5.3-5 7.2-.9Z" fill="currentColor"/></symbol>
+      <symbol id="i-badge" viewBox="0 0 48 48"><path d="m24 3 6.4 13.6 14.9 1.9-11 10.3 2.9 14.7L24 36.3l-13.2 7.2 2.9-14.7-11-10.3 14.9-1.9Z" fill="currentColor" stroke="#16233a" stroke-width="3" stroke-linejoin="round"/><path d="m24 12 3.9 8.3 9.1 1.2-6.7 6.3 1.8 9-8.1-4.4-8.1 4.4 1.8-9-6.7-6.3 9.1-1.2Z" style="fill: var(--star-core, #ffd95a)"/></symbol>
+      <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M3 8.5h9V3l10 9-10 9v-5.5H3Z" fill="currentColor"/></symbol>
+    </defs></svg>
+    <div id="ground"></div>
 
     <div id="play" class="hidden">
       <div id="hud">
-        <button id="back" class="round" aria-label="Levels">‹</button>
+        <button id="back" class="round" aria-label="Levels"><svg class="i"><use href="#i-back"/></svg></button>
         <div class="lvl"><small id="tier"></small><span id="level"></span></div>
         <div class="count"><small>MOVES</small><span id="moves">0</span></div>
         <div class="count par"><small>PAR</small><span id="par"></span></div>
       </div>
-      <div id="wrap"><div id="board"><div id="exit"><b>›</b><b>›</b></div><div id="ghost"></div></div></div>
+      <div id="wrap"><div id="board"><div id="exit"><svg class="i"><use href="#i-arrow"/></svg></div><div id="ghost"></div></div></div>
       <div id="tools">
-        <button id="undo" class="tool"><b>↶</b>Undo</button>
-        <button id="again" class="tool"><b>⟲</b>Restart</button>
-        <button id="hint" class="tool"><b>✦</b>Hint</button>
+        <button id="undo" class="tool"><svg class="i"><use href="#i-undo"/></svg>Undo</button>
+        <button id="again" class="tool"><svg class="i"><use href="#i-again"/></svg>Restart</button>
+        <button id="hint" class="tool"><svg class="i"><use href="#i-hint"/></svg>Hint</button>
       </div>
     </div>
 
     <div id="menu" class="screen">
       <h1><span>GRID</span><span>LOCK</span></h1>
-      <p class="tag">Clear the jam. Get the gold car out.</p>
+      <div id="parade" aria-hidden="true"></div>
+      <p class="tag">Clear the jam. Get the cab out.</p>
       <button id="go" class="big">PLAY</button>
       <button id="open-levels" class="big alt">LEVELS</button>
       <div id="stats"></div>
-      <p class="help">Drag vehicles along their lane. Slide the <b>gold car</b> out through the gate. Any slide of one vehicle counts as one move.</p>
+      <p class="help">Drag vehicles along their lane. Slide the <b>checker cab</b> out through the gate. Any slide of one vehicle counts as one move.</p>
       <div id="cloud">
-        <small>☁ CLOUD SAVE ID</small>
+        <small>Cloud save ID</small>
         <div class="idrow"><code id="cloud-id"></code><button id="cloud-copy" class="chip">Copy</button></div>
         <span id="cloud-status"></span>
         <button id="cloud-restore" class="link">Restore a save from another device</button>
@@ -47,20 +57,20 @@
         <button id="sound" class="chip"></button>
         <button id="wipe" class="chip">Reset progress</button>
       </div>
-      <div id="version"><span id="version-text"></span><button id="refresh" class="chip">↻ Check for update</button></div>
+      <div id="version"><span id="version-text"></span><button id="refresh" class="chip">Check for update</button></div>
     </div>
 
     <div id="levels" class="screen hidden scroll">
-      <div class="topbar"><button id="levels-back" class="chip">← Menu</button><span id="levels-stars"></span></div>
+      <div class="topbar"><button id="levels-back" class="chip">Menu</button><span id="levels-stars"></span></div>
       <div id="tiers"></div>
     </div>
 
     <div id="result" class="screen hidden">
-      <div id="burst"></div>
-      <h2>CLEAR!</h2>
+      <div id="r-road" aria-hidden="true"><i></i><b><svg class="i"><use href="#i-arrow"/></svg></b></div>
+      <h2>Cleared!</h2>
       <div id="r-stars"></div>
       <div id="r-text"></div>
-      <button id="r-next" class="big">NEXT</button>
+      <button id="r-next" class="big alt">NEXT</button>
       <div class="row"><button id="r-again" class="chip">Replay</button><button id="r-levels" class="chip">Levels</button></div>
     </div>
     <script type="module" src="/src/main.ts"></script>

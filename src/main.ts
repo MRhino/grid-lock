@@ -1,5 +1,9 @@
 import { registerSW } from 'virtual:pwa-register';
+import '@fontsource/bowlby-one/latin-400.css';
+import '@fontsource/barlow-semi-condensed/latin-600.css';
+import '@fontsource/barlow-semi-condensed/latin-700.css';
 import './style.css';
+import { vehicleSvg, CAB, TRAFFIC } from './toys';
 import raw from './levels.json';
 import { Game, HERO, SIZE, WIN_POS, TIERS, LEVELS_PER_TIER, CAMPAIGN_START, isWarmup, displayOf, starsFor, tierOf, type LevelDef } from './puzzle';
 import { sfx, unlock, isMuted, setMuted } from './audio';
@@ -9,7 +13,8 @@ import { load, save, fresh, record, unlocked, totalStars, saveRun, loadRun, clea
 declare const __APP_VERSION__: string, __COMMIT__: string;
 const $ = <T extends HTMLElement = HTMLElement>(id: string) => document.getElementById(id) as T;
 const LEVELS = raw as LevelDef[];
-const WARMUP = { name: 'Warm-Up', hue: 210 };
+const WARMUP = { name: 'Warm-Up', color: '#4a5a63' };
+const STAR = '<svg class="i"><use href="#i-star"/></svg>';
 const campaignOpen = () => unlocked(progress, LEVELS.length, CAMPAIGN_START);
 const params = new URLSearchParams(location.search);
 const debugShot = params.has('shot');
@@ -56,7 +61,7 @@ $('version-text').textContent = `v${__APP_VERSION__.split('.').slice(0, 2).join(
 function layout() {
   const w = $('wrap');
   if (!w.clientHeight) return;
-  cell = Math.min(100, Math.floor(Math.min((w.clientWidth - 40) / SIZE, (w.clientHeight - 16) / SIZE)));
+  cell = Math.min(100, Math.floor(Math.min((w.clientWidth - 64) / SIZE, (w.clientHeight - 40) / SIZE)));
   document.documentElement.style.setProperty('--c', `${cell}px`);
   if (game) game.vehicles.forEach((v, i) => {
     pieces[i].style.width = `${(v.horiz ? v.len : 1) * cell}px`;
@@ -78,10 +83,8 @@ function buildPieces() {
     const el = document.createElement('div');
     const flip = v.id !== HERO && v.id.charCodeAt(0) % 2 === 0;
     el.className = `piece ${v.horiz ? 'h' : 'v'}${v.len === 3 ? ' truck' : ''}${v.id === HERO ? ' hero' : ''}${flip ? ' flip' : ''}`;
-    // Traffic stays out of the oranges and yellows so gold only ever means the getaway car.
-    const hue = (i * 47 + 175) % 360;
-    el.style.setProperty('--h', String(hue >= 20 && hue <= 85 ? hue + 170 : hue));
-    el.innerHTML = `<div class="car"><i class="glass"></i><i class="tail"></i><i class="lamp a"></i><i class="lamp b"></i>${v.id === HERO ? '<b class="star">★</b>' : ''}</div>`;
+    el.style.setProperty('--len', String(v.len));
+    el.innerHTML = `<div class="car">${vehicleSvg(v.len, v.id === HERO ? CAB : TRAFFIC[i % TRAFFIC.length], v.id === HERO)}</div>`;
     el.addEventListener('pointerdown', e => grab(e, i));
     $('board').appendChild(el);
     return el;
@@ -127,6 +130,7 @@ function grab(e: PointerEvent, i: number) {
     el.removeEventListener('pointercancel', end);
     if (game.play(i, to)) { sfx.slide(); refresh(); }
     place(i, game.pos[i]);
+    el.classList.remove('clack'); void el.offsetWidth; el.classList.add('clack');
     if (game.won) win();
   };
   const move = (ev: PointerEvent) => {
@@ -196,7 +200,7 @@ function start(n: number, resume = false) {
   show('play');
   const t = isWarmup(n) ? WARMUP : TIERS[tierOf(n)];
   $('tier').textContent = t.name.toUpperCase();
-  document.documentElement.style.setProperty('--tier', String(t.hue));
+  document.documentElement.style.setProperty('--tier', t.color);
   $('level').textContent = String(displayOf(n));
   $('par').textContent = String(game.def.p);
   clearHint();
@@ -217,16 +221,13 @@ function win() {
   pieces[0].classList.add('out');
   place(0, SIZE + 2);
   setTimeout(() => {
-    $('r-stars').innerHTML = [1, 2, 3].map(i => (i <= stars ? '<b>★</b>' : '★')).join('');
+    $('r-stars').innerHTML = [1, 2, 3].map(i => `<span class="${i <= stars ? 'on' : ''}" style="--n:${i}"><svg class="i"><use href="#i-badge"/></svg></span>`).join('');
+    $('r-road').querySelector('i')!.innerHTML = vehicleSvg(2, CAB, true);
     const par = game!.def.p;
     const note = moves <= par ? 'Perfect route!' : hinted && stars === 2 ? 'Hints cap this at 2 stars.' : `${moves - par} over par.`;
     const pb = before && moves < before.moves ? ' New best!' : '';
     $('r-text').textContent = `${moves} moves · par ${par}. ${note}${pb}`;
     $('r-next').textContent = level < LEVELS.length ? 'NEXT' : 'ALL CLEAR';
-    $('burst').innerHTML = Array.from({ length: 36 }, (_, i) => {
-      const a = (i / 36) * Math.PI * 2, r = 130 + (i % 5) * 45;
-      return `<i style="--x:${Math.cos(a) * r}px;--y:${Math.sin(a) * r}px;background:hsl(${i * 37} 100% 60%)"></i>`;
-    }).join('');
     show('result');
   }, 620);
 }
@@ -253,12 +254,12 @@ async function sync() {
 
 function openMenu() {
   const solved = Object.keys(progress.best).filter(k => !isWarmup(Number(k))).length;
-  $('stats').textContent = totalStars(progress) ? `${solved} / ${LEVELS.length - CAMPAIGN_START + 1} cleared · ${totalStars(progress)} ★` : '';
+  $('stats').textContent = totalStars(progress) ? `${solved} / ${LEVELS.length - CAMPAIGN_START + 1} cleared · ${totalStars(progress)} stars` : '';
   const run = loadRun();
   $('go').textContent = run && run.history.length ? `CONTINUE ${displayOf(run.level)}` : solved ? `PLAY ${displayOf(campaignOpen())}` : 'PLAY';
   wipeArmed = false;
   $('wipe').textContent = 'Reset progress';
-  $('sound').textContent = isMuted() ? '🔇 Sound off' : '🔊 Sound on';
+  $('sound').textContent = isMuted() ? 'Sound off' : 'Sound on';
   renderCloud();
   show('menu');
 }
@@ -267,18 +268,18 @@ function openLevels() {
   const open = campaignOpen();
   const box = $('tiers');
   box.textContent = '';
-  const section = (t: { name: string; hue: number }, from: number, to: number) => {
+  const section = (t: { name: string; color: string }, from: number, to: number) => {
     const name = document.createElement('div');
     name.className = 'tier-name'; name.textContent = t.name;
-    name.style.setProperty('--tier', String(t.hue));
+    name.style.setProperty('--tier', t.color);
     const grid = document.createElement('div');
-    grid.className = 'grid'; grid.style.setProperty('--tier', String(t.hue));
+    grid.className = 'grid'; grid.style.setProperty('--tier', t.color);
     for (let n = from; n <= to; n++) {
       const b = document.createElement('button');
       b.className = 'cell';
       b.disabled = n > open; // Warm-Up is always open
       const stars = progress.best[n]?.stars ?? 0;
-      b.innerHTML = `${displayOf(n)}<small>${'★'.repeat(stars)}</small>`;
+      b.innerHTML = `${displayOf(n)}<small>${STAR.repeat(stars)}</small>`;
       b.addEventListener('click', () => { sfx.tap(); start(n, true); });
       grid.appendChild(b);
     }
@@ -286,7 +287,7 @@ function openLevels() {
   };
   TIERS.forEach((t, ti) => section(t, CAMPAIGN_START + ti * LEVELS_PER_TIER, CAMPAIGN_START + (ti + 1) * LEVELS_PER_TIER - 1));
   section(WARMUP, 1, CAMPAIGN_START - 1);
-  $('levels-stars').textContent = `${totalStars(progress)} ★`;
+  $('levels-stars').innerHTML = `${totalStars(progress)} ${STAR}`;
   show('levels');
 }
 
@@ -304,7 +305,7 @@ $('back').addEventListener('click', () => { sfx.tap(); if (!escaping) openLevels
 $('r-next').addEventListener('click', () => { sfx.tap(); level < LEVELS.length ? start(level + 1) : openLevels(); });
 $('r-again').addEventListener('click', () => { sfx.tap(); start(level); });
 $('r-levels').addEventListener('click', () => { sfx.tap(); openLevels(); });
-$('sound').addEventListener('click', () => { setMuted(!isMuted()); sfx.tap(); $('sound').textContent = isMuted() ? '🔇 Sound off' : '🔊 Sound on'; });
+$('sound').addEventListener('click', () => { setMuted(!isMuted()); sfx.tap(); $('sound').textContent = isMuted() ? 'Sound off' : 'Sound on'; });
 $('wipe').addEventListener('click', () => {
   if (!wipeArmed) { wipeArmed = true; $('wipe').textContent = 'Tap again to erase'; return; }
   // A new ID, or the next sync would merge the old clears straight back in.
@@ -313,7 +314,7 @@ $('wipe').addEventListener('click', () => {
   openMenu();
 });
 $('cloud-copy').addEventListener('click', async () => {
-  try { await navigator.clipboard.writeText(displayId()); $('cloud-copy').textContent = 'Copied ✓'; }
+  try { await navigator.clipboard.writeText(displayId()); $('cloud-copy').textContent = 'Copied'; }
   catch { $('cloud-copy').textContent = 'Select & copy'; }
   setTimeout(() => ($('cloud-copy').textContent = 'Copy'), 1800);
 });
@@ -328,6 +329,8 @@ $('cloud-restore').addEventListener('click', async () => {
 });
 addEventListener('pointerdown', unlock);
 requestPersist();
+$('parade').innerHTML = [TRAFFIC[1], CAB, TRAFFIC[0], TRAFFIC[4]].map((c, i) =>
+  `<i style="--i:${i};--len:${i === 2 ? 3 : 2}">${vehicleSvg(i === 2 ? 3 : 2, c, c === CAB)}</i>`).join('');
 
 // ?shot=LEVEL&solve=N starts a level and plays N solution moves (never saved).
 if (debugShot) {
