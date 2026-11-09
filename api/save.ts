@@ -3,9 +3,8 @@
 //   PUT  /api/save  {id, save}    → merges with the stored copy level by level,
 //                                   always responds with the merged save.
 import { get, put } from '@vercel/blob';
-import { normalizeId, mergeSaves } from '../src/saveid.js';
+import { normalizeId, mergeSaves, MAX_SAVE_BYTES } from '../src/saveid.js';
 
-const MAX_BYTES = 32_000;
 // Preview/branch deploys keep their own copies so testing never touches real saves.
 const PREFIX = process.env.VERCEL_ENV === 'production' ? 'saves' : 'preview/saves';
 const path = (id: string) => `${PREFIX}/${id}.json`;
@@ -15,6 +14,8 @@ const json = (body: unknown, status = 200) =>
 async function read(id: string): Promise<Record<string, unknown> | null> {
   const r = await get(path(id), { access: 'private', useCache: false });
   if (!r || r.statusCode !== 200) return null;
+  // Anything over the limit predates the caps; treat it as absent rather than load it.
+  if (r.blob.size > MAX_SAVE_BYTES) { void r.stream.cancel(); return null; }
   try { return JSON.parse(await new Response(r.stream).text()); } catch { return null; }
 }
 
@@ -27,7 +28,7 @@ export async function GET(req: Request) {
 
 export async function PUT(req: Request) {
   const raw = await req.text();
-  if (raw.length > MAX_BYTES) return json({ error: 'too large' }, 413);
+  if (raw.length > MAX_SAVE_BYTES) return json({ error: 'too large' }, 413);
   let body: { id?: string; save?: Record<string, unknown> };
   try { body = JSON.parse(raw); } catch { return json({ error: 'bad json' }, 400); }
   const id = normalizeId(body.id ?? '');
@@ -37,7 +38,9 @@ export async function PUT(req: Request) {
   const existing = await read(id);
   const merged = mergeSaves(save, existing ?? {});
   if (existing && JSON.stringify(merged) === JSON.stringify(existing)) return json({ id, save: existing, kept: 'cloud' });
-  await put(path(id), JSON.stringify(merged), {
+  const out = JSON.stringify(merged);
+  if (out.length > MAX_SAVE_BYTES) return json({ error: 'too large' }, 413);
+  await put(path(id), out, {
     access: 'private', allowOverwrite: true, addRandomSuffix: false, contentType: 'application/json',
   });
   return json({ id, save: merged, kept: 'merged' });

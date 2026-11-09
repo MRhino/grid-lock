@@ -16,11 +16,17 @@ export const formatId = (id: string) => `GL-${id.match(/.{4}/g)!.join('-')}`;
 export interface Best { moves: number; stars: number }
 export type Bests = Record<string, Best>; // keyed by level number
 
+// Saves are public-write, so the key space must be finite: these bound a save's total size.
+// MAX_LEVEL leaves room for appended packs; raise it (and MAX_SAVE_BYTES) before shipping past it.
+export const MAX_LEVEL = 1000;
+const MAX_MOVES = 99_999;
+export const MAX_SAVE_BYTES = 32_000;
+
 /** Tolerant: keeps every entry it can validate, drops the rest. */
 export function cleanBests(x: any): Bests {
   const out: Bests = {};
   if (x && typeof x === 'object') for (const [k, b] of Object.entries<any>(x)) {
-    if (/^\d+$/.test(k) && Number.isInteger(b?.moves) && b.moves > 0 && Number.isInteger(b?.stars))
+    if (/^[1-9]\d{0,3}$/.test(k) && Number(k) <= MAX_LEVEL && Number.isInteger(b?.moves) && b.moves > 0 && b.moves <= MAX_MOVES && Number.isInteger(b?.stars))
       out[k] = { moves: b.moves, stars: Math.max(1, Math.min(3, b.stars)) };
   }
   return out;
