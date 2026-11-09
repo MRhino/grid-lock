@@ -1,13 +1,15 @@
 import { registerSW } from 'virtual:pwa-register';
 import './style.css';
 import raw from './levels.json';
-import { Game, HERO, SIZE, WIN_POS, TIERS, LEVELS_PER_TIER, starsFor, tierOf, type LevelDef } from './puzzle';
+import { Game, HERO, SIZE, WIN_POS, TIERS, LEVELS_PER_TIER, CAMPAIGN_START, isWarmup, displayOf, starsFor, tierOf, type LevelDef } from './puzzle';
 import { sfx, unlock, isMuted, setMuted } from './audio';
 import { load, save, fresh, record, unlocked, totalStars, saveRun, loadRun, clearRun, requestPersist, type Save } from './progress';
 
 declare const __APP_VERSION__: string, __COMMIT__: string;
 const $ = <T extends HTMLElement = HTMLElement>(id: string) => document.getElementById(id) as T;
 const LEVELS = raw as LevelDef[];
+const WARMUP = { name: 'Warm-Up', hue: 210 };
+const campaignOpen = () => unlocked(progress, LEVELS.length, CAMPAIGN_START);
 const params = new URLSearchParams(location.search);
 const debugShot = params.has('shot');
 
@@ -191,10 +193,10 @@ function start(n: number, resume = false) {
     }
   }
   show('play');
-  const t = TIERS[tierOf(n)];
+  const t = isWarmup(n) ? WARMUP : TIERS[tierOf(n)];
   $('tier').textContent = t.name.toUpperCase();
   document.documentElement.style.setProperty('--tier', String(t.hue));
-  $('level').textContent = String(n);
+  $('level').textContent = String(displayOf(n));
   $('par').textContent = String(game.def.p);
   clearHint();
   buildPieces();
@@ -229,10 +231,10 @@ function win() {
 }
 
 function openMenu() {
-  const solved = Object.keys(progress.best).length;
-  $('stats').textContent = solved ? `${solved} / ${LEVELS.length} cleared · ${totalStars(progress)} ★` : '';
+  const solved = Object.keys(progress.best).filter(k => !isWarmup(Number(k))).length;
+  $('stats').textContent = totalStars(progress) ? `${solved} / ${LEVELS.length - CAMPAIGN_START + 1} cleared · ${totalStars(progress)} ★` : '';
   const run = loadRun();
-  $('go').textContent = run && run.history.length ? `CONTINUE ${run.level}` : solved ? `PLAY ${unlocked(progress, LEVELS.length)}` : 'PLAY';
+  $('go').textContent = run && run.history.length ? `CONTINUE ${displayOf(run.level)}` : solved ? `PLAY ${displayOf(campaignOpen())}` : 'PLAY';
   wipeArmed = false;
   $('wipe').textContent = 'Reset progress';
   $('sound').textContent = isMuted() ? '🔇 Sound off' : '🔊 Sound on';
@@ -240,26 +242,28 @@ function openMenu() {
 }
 
 function openLevels() {
-  const open = unlocked(progress, LEVELS.length);
+  const open = campaignOpen();
   const box = $('tiers');
   box.textContent = '';
-  TIERS.forEach((t, ti) => {
+  const section = (t: { name: string; hue: number }, from: number, to: number) => {
     const name = document.createElement('div');
     name.className = 'tier-name'; name.textContent = t.name;
     name.style.setProperty('--tier', String(t.hue));
     const grid = document.createElement('div');
     grid.className = 'grid'; grid.style.setProperty('--tier', String(t.hue));
-    for (let n = ti * LEVELS_PER_TIER + 1; n <= (ti + 1) * LEVELS_PER_TIER; n++) {
+    for (let n = from; n <= to; n++) {
       const b = document.createElement('button');
       b.className = 'cell';
-      b.disabled = n > open;
+      b.disabled = n > open; // Warm-Up is always open
       const stars = progress.best[n]?.stars ?? 0;
-      b.innerHTML = `${n}<small>${'★'.repeat(stars)}</small>`;
+      b.innerHTML = `${displayOf(n)}<small>${'★'.repeat(stars)}</small>`;
       b.addEventListener('click', () => { sfx.tap(); start(n, true); });
       grid.appendChild(b);
     }
     box.append(name, grid);
-  });
+  };
+  TIERS.forEach((t, ti) => section(t, CAMPAIGN_START + ti * LEVELS_PER_TIER, CAMPAIGN_START + (ti + 1) * LEVELS_PER_TIER - 1));
+  section(WARMUP, 1, CAMPAIGN_START - 1);
   $('levels-stars').textContent = `${totalStars(progress)} ★`;
   show('levels');
 }
@@ -270,7 +274,7 @@ $('go').addEventListener('click', () => {
   sfx.tap();
   const run = loadRun();
   if (run && run.history.length && run.level >= 1 && run.level <= LEVELS.length) start(run.level, true);
-  else start(unlocked(progress, LEVELS.length));
+  else start(campaignOpen());
 });
 $('open-levels').addEventListener('click', () => { sfx.tap(); openLevels(); });
 $('levels-back').addEventListener('click', () => { sfx.tap(); openMenu(); });

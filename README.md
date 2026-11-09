@@ -4,7 +4,7 @@
 
 A neon sliding-traffic puzzle PWA. Drag vehicles along their lanes and get the gold car out through the gate.
 
-150 generated levels across five tiers, each with a computed par, plus undo, hints, stars, and resume mid-level.
+A 150-level campaign across five tiers on densely packed boards, plus a 150-level Warm-Up pack, each level with a computed par, plus undo, hints, stars, and resume mid-level.
 
 - `npm run dev`: play on your phone over LAN
 - `npm run build`: typecheck and build

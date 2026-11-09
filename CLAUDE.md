@@ -6,7 +6,7 @@
 - Difficulty is ONE scalar: target par by level (`parFor` in `scripts/gen-levels.ts`). Don't add separate knobs.
 - `src/levels.json` is append-only once shipped: saved progress is keyed by level number. Never reorder or edit shipped levels.
 - Consecutive slides of one vehicle merge into one move (`Game.play`). That keeps par fair: a vehicle's free range is contiguous, so a chain of its slides equals one direct slide.
-- `npm run levels` is time-budgeted and can produce a different pack; don't re-run it after shipping.
+- Levels 1-150 are the Warm-Up pack; the campaign starts at `CAMPAIGN_START` (151). `npm run levels` regenerates only the campaign and is time-budgeted, so don't re-run it after the campaign ships; add new levels by appending.
 - Levels are always generated. Never copy layouts from a commercial puzzle product, and keep its name and look out of the game.
 - Player progress must survive every deploy (`src/progress.ts`): never rename the `gl-save-v1` key; change the shape only by bumping `SCHEMA` and adding a `MIGRATIONS` step. The mid-level run (`gl-run`) is disposable.
 - The service worker must never reload mid-level (`reloadPending` in main.ts).

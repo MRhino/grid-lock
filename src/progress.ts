@@ -55,9 +55,9 @@ export function record(s: Save, level: number, moves: number, stars: number) {
   save(s);
 }
 
-/** Highest playable level: one past the furthest solved. */
-export function unlocked(s: Save, total: number): number {
-  return Math.min(total, Math.max(0, ...Object.keys(s.best).map(Number)) + 1);
+/** Highest playable level from `first` on: one past the furthest solved. */
+export function unlocked(s: Save, total: number, first = 1): number {
+  return Math.min(total, Math.max(first - 1, ...Object.keys(s.best).map(Number)) + 1);
 }
 export const totalStars = (s: Save) => Object.values(s.best).reduce((n, b) => n + b.stars, 0);
 

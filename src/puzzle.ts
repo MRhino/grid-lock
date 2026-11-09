@@ -176,4 +176,8 @@ export const TIERS = [
   { name: 'Total Gridlock', hue: 0 },
 ];
 export const LEVELS_PER_TIER = 30;
-export const tierOf = (level: number) => Math.min(TIERS.length - 1, Math.floor((level - 1) / LEVELS_PER_TIER));
+// Levels 1-150 are the original easy pack (now Warm-Up); the campaign is appended after them.
+export const CAMPAIGN_START = 151;
+export const isWarmup = (level: number) => level < CAMPAIGN_START;
+export const displayOf = (level: number) => (isWarmup(level) ? level : level - CAMPAIGN_START + 1);
+export const tierOf = (level: number) => Math.min(TIERS.length - 1, Math.floor((displayOf(level) - 1) / LEVELS_PER_TIER));

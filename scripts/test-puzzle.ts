@@ -1,14 +1,14 @@
 // Checks every shipped level against a fresh solve, plus the move and save rules.
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { Game, parseBoard, solve, starsFor, tierOf, TIERS, LEVELS_PER_TIER, isWon, type LevelDef } from '../src/puzzle.ts';
+import { Game, parseBoard, solve, starsFor, tierOf, TIERS, LEVELS_PER_TIER, CAMPAIGN_START, isWarmup, isWon, type LevelDef } from '../src/puzzle.ts';
 
 const store = new Map<string, string>();
 (globalThis as any).localStorage = { getItem: (k: string) => store.get(k) ?? null, setItem: (k: string, v: string) => store.set(k, v), removeItem: (k: string) => store.delete(k) };
 const { parse, load, save, record, unlocked, fresh, SCHEMA } = await import('../src/progress.ts');
 
 const levels: LevelDef[] = JSON.parse(readFileSync('src/levels.json', 'utf8'));
-assert.equal(levels.length, TIERS.length * LEVELS_PER_TIER);
+assert.equal(levels.length, CAMPAIGN_START - 1 + TIERS.length * LEVELS_PER_TIER);
 assert.equal(new Set(levels.map(l => l.b)).size, levels.length, 'levels are unique');
 
 let slowest = 0;
@@ -21,12 +21,14 @@ levels.forEach((l, i) => {
   assert.ok(route, `level ${i + 1} solvable`);
   assert.equal(route.length, l.p, `level ${i + 1} par`);
   assert.ok(!isWon(pos), `level ${i + 1} not already won`);
-  if (i) assert.ok(l.p >= levels[i - 1].p, `level ${i + 1} no easier than the last`);
+  if (i && i + 1 !== CAMPAIGN_START) assert.ok(l.p >= levels[i - 1].p, `level ${i + 1} no easier than the last`);
   const g = new Game(l);
   for (const m of route) assert.ok(g.play(m.v, m.to), `level ${i + 1} route is legal`);
   assert.ok(g.won);
   assert.equal(g.moves, l.p);
   assert.equal(starsFor(g.moves, l.p, false), 3);
+  if (isWarmup(i + 1)) return;
+  assert.ok(vehicles.length >= 10, `level ${i + 1} is dense`);
   tiers[tierOf(i + 1)].pars.push(l.p);
   tiers[tierOf(i + 1)].vehicles += vehicles.length;
 });
@@ -49,6 +51,7 @@ assert.equal(parse('nope'), null);
 const s = fresh(); record(s, 2, 9, 2); record(s, 2, 12, 3);
 assert.deepEqual(s.best[2], { moves: 9, stars: 3 });
 assert.equal(unlocked(s, 150), 3);
+assert.equal(unlocked(s, 300, CAMPAIGN_START), CAMPAIGN_START);
 store.set('gl-save-v1', '{broken');
 assert.deepEqual(load().best[2], { moves: 9, stars: 3 });
 save(fresh()); assert.equal(JSON.parse(store.get('gl-save-v1')!).schema, SCHEMA);
