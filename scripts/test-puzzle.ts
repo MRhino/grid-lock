@@ -65,5 +65,17 @@ const sid = '0123456789ABCDEF';
 assert.equal(normalizeId(formatId(sid).toLowerCase()), sid);
 assert.equal(normalizeId('short'), null);
 
+// A backup with nothing to send must not block the one after the first clear.
+(globalThis as any).addEventListener = () => {};
+let puts = 0;
+(globalThis as any).fetch = async (_: string, init: { body: string }) => { puts++; return new Response(JSON.stringify({ save: JSON.parse(init.body).save })); };
+const { backup } = await import('../src/cloud.ts');
+save(fresh());
+await backup();
+assert.equal(puts, 0);
+const cleared = fresh(); record(cleared, 151, 14, 2);
+await backup();
+assert.equal(puts, 1, 'first clear is backed up');
+
 for (const t of tiers) console.log(`${t.name.padEnd(15)} par ${t.pars[0]}-${t.pars[t.pars.length - 1]}, avg ${(t.vehicles / t.pars.length).toFixed(1)} vehicles`);
 console.log(`all ${levels.length} levels verified; slowest solve ${slowest.toFixed(0)}ms`);
