@@ -56,5 +56,14 @@ store.set('gl-save-v1', '{broken');
 assert.deepEqual(load().best[2], { moves: 9, stars: 3 });
 save(fresh()); assert.equal(JSON.parse(store.get('gl-save-v1')!).schema, SCHEMA);
 
+// Cloud: merging is lossless both ways; IDs read back however they're typed.
+const { mergeSaves, normalizeId, formatId } = await import('../src/saveid.ts');
+const m1 = mergeSaves({ schema: 1, best: { 1: { moves: 5, stars: 2 }, 2: { moves: 9, stars: 3 } } }, { schema: 1, best: { 1: { moves: 7, stars: 3 }, 3: { moves: 4, stars: 1 } } });
+assert.deepEqual(m1.best, { 1: { moves: 5, stars: 3 }, 2: { moves: 9, stars: 3 }, 3: { moves: 4, stars: 1 } });
+assert.deepEqual(mergeSaves({}, { best: { bad: 1 } }).best, {});
+const sid = '0123456789ABCDEF';
+assert.equal(normalizeId(formatId(sid).toLowerCase()), sid);
+assert.equal(normalizeId('short'), null);
+
 for (const t of tiers) console.log(`${t.name.padEnd(15)} par ${t.pars[0]}-${t.pars[t.pars.length - 1]}, avg ${(t.vehicles / t.pars.length).toFixed(1)} vehicles`);
 console.log(`all ${levels.length} levels verified; slowest solve ${slowest.toFixed(0)}ms`);

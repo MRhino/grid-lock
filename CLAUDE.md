@@ -9,6 +9,7 @@
 - Levels 1-150 are the Warm-Up pack; the campaign starts at `CAMPAIGN_START` (151). `npm run levels` regenerates only the campaign and is time-budgeted, so don't re-run it after the campaign ships; add new levels by appending.
 - Levels are always generated. Never copy layouts from a commercial puzzle product, and keep its name and look out of the game.
 - Player progress must survive every deploy (`src/progress.ts`): never rename the `gl-save-v1` key; change the shape only by bumping `SCHEMA` and adding a `MIGRATIONS` step. The mid-level run (`gl-run`) is disposable.
+- Cloud save: `api/save.ts` stores one private Vercel Blob per save ID (`saves/<ID>.json`, store `grid-lock-saves`, syd1; previews use `preview/saves/`). `mergeSaves` in `src/saveid.ts` merges level by level and must cover every new save field. The client syncs on launch and after each clear, never per move. Reset takes a new ID so old clears aren't merged back.
 - The service worker must never reload mid-level (`reloadPending` in main.ts).
 - Visual check: `npm run build && npx vite preview`, then screenshot with headless Chrome. `?shot=LEVEL&solve=N` opens a level and plays N solution moves without saving.
 - Visuals: obvious, saturated, glowing. Subtle cues get rejected.

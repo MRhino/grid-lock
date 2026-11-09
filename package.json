@@ -1,7 +1,7 @@
 {
   "name": "grid-lock",
   "private": true,
-  "version": "0.3.0",
+  "version": "0.4.0",
   "type": "module",
   "scripts": {
     "icons": "node scripts/make-icons.mjs",
@@ -16,5 +16,8 @@
     "typescript": "^7.0.2",
     "vite": "^8.3.5",
     "vite-plugin-pwa": "^2.0.0"
+  },
+  "dependencies": {
+    "@vercel/blob": "^2.8.2"
   }
 }

@@ -17,6 +17,7 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: ['icon-180.png'],
+      workbox: { navigateFallbackDenylist: [/^\/api\//] },
       manifest: {
         name: 'Grid Lock',
         short_name: 'Grid Lock',

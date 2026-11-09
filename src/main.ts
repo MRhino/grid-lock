@@ -3,6 +3,7 @@ import './style.css';
 import raw from './levels.json';
 import { Game, HERO, SIZE, WIN_POS, TIERS, LEVELS_PER_TIER, CAMPAIGN_START, isWarmup, displayOf, starsFor, tierOf, type LevelDef } from './puzzle';
 import { sfx, unlock, isMuted, setMuted } from './audio';
+import { cloudId, newCloudId, displayId, lastSynced, backup, restore } from './cloud';
 import { load, save, fresh, record, unlocked, totalStars, saveRun, loadRun, clearRun, requestPersist, type Save } from './progress';
 
 declare const __APP_VERSION__: string, __COMMIT__: string;
@@ -211,7 +212,7 @@ function win() {
   const stars = starsFor(game.moves, game.def.p, game.hinted);
   const { moves, hinted } = game;
   const before = progress.best[level];
-  if (!debugShot) { record(progress, level, moves, stars); clearRun(); }
+  if (!debugShot) { record(progress, level, moves, stars); clearRun(); void sync(); }
   sfx.escape(); sfx.clear();
   pieces[0].classList.add('out');
   place(0, SIZE + 2);
@@ -230,6 +231,26 @@ function win() {
   }, 620);
 }
 
+// ---------- cloud save ----------
+let syncState: 'idle' | 'syncing' = 'idle';
+function renderCloud() {
+  $('cloud-id').textContent = displayId();
+  const t = lastSynced();
+  $('cloud-status').textContent = syncState === 'syncing' ? 'Backing up…'
+    : t ? `Backed up ${new Date(t).toLocaleString([], { dateStyle: 'short', timeStyle: 'short' })}`
+    : Object.keys(progress.best).length ? 'Not backed up yet (needs a connection)' : 'Backs up after your first clear';
+}
+/** Once on launch and after each clear, never per move. */
+async function sync() {
+  if (debugShot) return;
+  syncState = 'syncing'; if (mode === 'menu') renderCloud();
+  const merged = await backup();
+  syncState = 'idle';
+  if (merged) progress = merged; // the cloud had clears this device didn't
+  if (mode === 'menu') openMenu();
+  else if (mode === 'levels' && merged) openLevels();
+}
+
 function openMenu() {
   const solved = Object.keys(progress.best).filter(k => !isWarmup(Number(k))).length;
   $('stats').textContent = totalStars(progress) ? `${solved} / ${LEVELS.length - CAMPAIGN_START + 1} cleared · ${totalStars(progress)} ★` : '';
@@ -238,6 +259,7 @@ function openMenu() {
   wipeArmed = false;
   $('wipe').textContent = 'Reset progress';
   $('sound').textContent = isMuted() ? '🔇 Sound off' : '🔊 Sound on';
+  renderCloud();
   show('menu');
 }
 
@@ -285,7 +307,23 @@ $('r-levels').addEventListener('click', () => { sfx.tap(); openLevels(); });
 $('sound').addEventListener('click', () => { setMuted(!isMuted()); sfx.tap(); $('sound').textContent = isMuted() ? '🔇 Sound off' : '🔊 Sound on'; });
 $('wipe').addEventListener('click', () => {
   if (!wipeArmed) { wipeArmed = true; $('wipe').textContent = 'Tap again to erase'; return; }
+  // A new ID, or the next sync would merge the old clears straight back in.
+  newCloudId();
   progress = fresh(); save(progress); clearRun();
+  openMenu();
+});
+$('cloud-copy').addEventListener('click', async () => {
+  try { await navigator.clipboard.writeText(displayId()); $('cloud-copy').textContent = 'Copied ✓'; }
+  catch { $('cloud-copy').textContent = 'Select & copy'; }
+  setTimeout(() => ($('cloud-copy').textContent = 'Copy'), 1800);
+});
+$('cloud-restore').addEventListener('click', async () => {
+  const input = prompt('Enter the save ID from your other device:');
+  if (!input) return;
+  $('cloud-status').textContent = 'Restoring…';
+  const r = await restore(input);
+  if (!r.ok) { alert(r.reason); renderCloud(); return; }
+  progress = load();
   openMenu();
 });
 addEventListener('pointerdown', unlock);
@@ -298,4 +336,4 @@ if (debugShot) {
   game!.vehicles.forEach((_, i) => place(i, game!.pos[i]));
   refresh();
   if (game!.won) win();
-} else openMenu();
+} else { cloudId(); openMenu(); void sync(); }

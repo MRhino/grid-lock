@@ -6,9 +6,9 @@
 // - Every save also writes a backup copy; a corrupt main save falls back to it.
 // - The mid-level run is disposable: if it doesn't replay cleanly, only the run is dropped.
 import type { Step } from './puzzle.ts';
+import { cleanBests, type Bests } from './saveid.ts';
 
-export interface Best { moves: number; stars: number }
-export interface Save { schema: number; best: Record<string, Best> } // keyed by level number
+export interface Save { schema: number; best: Bests }
 
 const KEY = 'gl-save-v1';
 const BACKUP = 'gl-save-backup';
@@ -28,10 +28,7 @@ export function parse(raw: string | null): Save | null {
     let v = typeof s.schema === 'number' ? s.schema : 0;
     while (v < SCHEMA && MIGRATIONS[v]) s = MIGRATIONS[v++](s);
     const out = fresh();
-    if (s.best && typeof s.best === 'object') for (const [k, b] of Object.entries<any>(s.best)) {
-      if (/^\d+$/.test(k) && Number.isInteger(b?.moves) && b.moves > 0 && Number.isInteger(b?.stars))
-        out.best[k] = { moves: b.moves, stars: Math.max(1, Math.min(3, b.stars)) };
-    }
+    out.best = cleanBests(s.best);
     return out;
   } catch { return null; }
 }
