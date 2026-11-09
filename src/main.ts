@@ -1,7 +1,7 @@
 import { registerSW } from 'virtual:pwa-register';
 import './style.css';
 import raw from './levels.json';
-import { Game, HERO, SIZE, TIERS, LEVELS_PER_TIER, starsFor, tierOf, type LevelDef } from './puzzle';
+import { Game, HERO, SIZE, WIN_POS, TIERS, LEVELS_PER_TIER, starsFor, tierOf, type LevelDef } from './puzzle';
 import { sfx, unlock, isMuted, setMuted } from './audio';
 import { load, save, fresh, record, unlocked, totalStars, saveRun, loadRun, clearRun, requestPersist, type Save } from './progress';
 
@@ -99,6 +99,9 @@ function refresh() {
 }
 
 // ---------- input ----------
+const GATE_PULL = 0.2; // cells short of the gate that already count as through it
+const FLICK_MS = 120; // how far a release coasts, as this many ms at release speed
+const FLICK_STALE_MS = 80; // a finger held still this long before lifting isn't a flick
 let drag: { i: number; id: number; from: number; p0: number; lo: number; hi: number } | null = null;
 
 function grab(e: PointerEvent, i: number) {
@@ -110,15 +113,9 @@ function grab(e: PointerEvent, i: number) {
   pieces[i].classList.add('drag');
   clearHint();
   sfx.grab();
-  const move = (ev: PointerEvent) => {
-    if (!drag || ev.pointerId !== drag.id) return;
-    const d = ((v.horiz ? ev.clientX : ev.clientY) - drag.p0) / cell;
-    place(i, Math.max(drag.lo, Math.min(drag.hi, drag.from + d)));
-  };
-  const end = (ev: PointerEvent) => {
-    if (!drag || ev.pointerId !== drag.id || !game) return;
-    const d = ev.type === 'pointerup' ? ((v.horiz ? ev.clientX : ev.clientY) - drag.p0) / cell : 0;
-    const to = Math.round(Math.max(drag.lo, Math.min(drag.hi, drag.from + d)));
+  let at = drag.from, vel = 0, lastT = e.timeStamp;
+  const finish = (to: number) => {
+    if (!game) return;
     drag = null;
     const el = pieces[i];
     el.classList.remove('drag');
@@ -128,6 +125,23 @@ function grab(e: PointerEvent, i: number) {
     if (game.play(i, to)) { sfx.slide(); refresh(); }
     place(i, game.pos[i]);
     if (game.won) win();
+  };
+  const move = (ev: PointerEvent) => {
+    if (!drag || ev.pointerId !== drag.id) return;
+    const d = ((v.horiz ? ev.clientX : ev.clientY) - drag.p0) / cell;
+    const p = Math.max(drag.lo, Math.min(drag.hi, drag.from + d));
+    const dt = ev.timeStamp - lastT;
+    if (dt > 0) { vel = vel * 0.4 + ((p - at) / dt) * 0.6; lastT = ev.timeStamp; }
+    at = p;
+    place(i, p);
+    // Reaching the open gate wins mid-drag, so the car carries on out under the finger.
+    if (i === 0 && drag.hi === WIN_POS && p >= WIN_POS - GATE_PULL) finish(WIN_POS);
+  };
+  const end = (ev: PointerEvent) => {
+    if (!drag || ev.pointerId !== drag.id) return;
+    if (ev.type !== 'pointerup') return finish(drag.from);
+    const coast = ev.timeStamp - lastT < FLICK_STALE_MS ? vel * FLICK_MS : 0;
+    finish(Math.round(Math.max(drag.lo, Math.min(drag.hi, at + coast))));
   };
   pieces[i].addEventListener('pointermove', move);
   pieces[i].addEventListener('pointerup', end);
