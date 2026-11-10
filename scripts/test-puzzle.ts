@@ -1,7 +1,7 @@
 // Checks every shipped level against a fresh solve, plus the move and save rules.
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { Game, parseBoard, solve, starsFor, tierOf, TIERS, LEVELS_PER_TIER, CAMPAIGN_START, isWarmup, isWon, type LevelDef } from '../src/puzzle.ts';
+import { Game, parseBoard, solve, analyse, puzzleKey, starsFor, tierOf, TIERS, LEVELS_PER_TIER, CAMPAIGN_START, isWarmup, isWon, type LevelDef } from '../src/puzzle.ts';
 
 const store = new Map<string, string>();
 (globalThis as any).localStorage = { getItem: (k: string) => store.get(k) ?? null, setItem: (k: string, v: string) => store.set(k, v), removeItem: (k: string) => store.delete(k) };
@@ -32,6 +32,11 @@ levels.forEach((l, i) => {
   tiers[tierOf(i + 1)].pars.push(l.p);
   tiers[tierOf(i + 1)].vehicles += vehicles.length;
 });
+
+// Campaign 100+ was regenerated: every level there must be a different puzzle, not a re-parked copy.
+const REGEN_FROM = CAMPAIGN_START + 99;
+const keys = new Set(levels.slice(REGEN_FROM - 1).map(l => { const p = parseBoard(l.b); return puzzleKey(p.vehicles, analyse(p.vehicles, p.pos)!); }));
+assert.equal(keys.size, levels.length - REGEN_FROM + 1, 'campaign 100+ has no repeated puzzles');
 
 // Moves: re-sliding merges, sliding back cancels, blocked slides are refused.
 const g = new Game({ b: 'oooooooooooo' + 'AAooBo' + 'ooooBo' + 'oooooooooooo', p: 0 });

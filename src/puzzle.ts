@@ -117,6 +117,17 @@ export function analyse(vs: Vehicle[], start: number[], cap = Infinity): { pos: 
   return states.map((pos, i) => ({ pos, dist: dist[i] }));
 }
 
+/** Same puzzle = same set of reachable positions; a car parked somewhere irrelevant
+ *  changes the board but not the puzzle. Keyed on the component, not the board. */
+export function puzzleKey(vs: Vehicle[], states: { pos: number[] }[]): string {
+  let k = '~';
+  for (const s of states) {
+    const b = toBoard(vs, s.pos).replace(/[B-Z]/g, 'x');
+    if (b < k) k = b;
+  }
+  return `${k}:${states.length}`;
+}
+
 // ---------- a game in progress ----------
 export class Game {
   vehicles: Vehicle[];
